@@ -5,7 +5,7 @@ import { Ionicons } from '@expo/vector-icons'
 
 import { ShakeEventExpo } from '../Components/ShakeEventExpo'
 
-import * as SQLite  from 'expo-sqlite'
+import * as SQLite from 'expo-sqlite'
 const db = SQLite.openDatabase('C:\Users\q\final_week3_madcamp\madcamp_tab3\mydb.db')
 
 
@@ -28,16 +28,18 @@ export default class CalendarTab extends Component {
             //처음이면 테스트 데이터 넣기
             if (isfirst) {
               isfirst= false;
-              const strTime = "2020-01-14"
+              const strDate = "2020-01-12"
+              const strTime = "03:45:23"
               const strPlace = "default_place"
+              
               let getID
               // schedule에 날짜,장소넣기 -> 해당id받아오기 -> 그id의 calendar에 넣기
               db.transaction(tx => {
                 tx.executeSql(
-                  `INSERT INTO schedule (datestr, place) VALUES (?,?)`,[strTime, strPlace]
+                  `INSERT INTO schedule (datestr, place) VALUES (?,?)`,[strDate, strPlace]
                 );
                 tx.executeSql(
-                  `SELECT id FROM schedule WHERE datestr = strTime AND place = strPlace`,
+                  `SELECT id FROM schedule WHERE datestr = strDate AND place = strPlace`,
                   [],(tx,results)=>{
                     getID = results.rows.item(0).id
                   }

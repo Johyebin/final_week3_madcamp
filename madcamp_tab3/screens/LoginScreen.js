@@ -8,8 +8,6 @@ const IOS_CLIENT_ID =
 const ANDROID_CLIENT_ID =
   "your-android-client-id";
 
-
-
 export default class LoginScreen extends Component {
   
   constructor(props) {
