@@ -3,11 +3,71 @@ import { Text, View, StyleSheet, Button, SafeAreaView } from "react-native";
 import { Calendar, Agenda } from 'react-native-calendars';
 import { Ionicons } from '@expo/vector-icons'
 
+import { ShakeEventExpo } from '../Components/ShakeEventExpo'
+
+import * as SQLite  from 'expo-sqlite'
+const db = SQLite.openDatabase('C:\Users\q\final_week3_madcamp\madcamp_tab3\mydb.db')
+
+
+let myID = 1;
+// 일단 테스트용으로 1로 그냥 고정시켜놓고.... 원래는 로그인해서 받아온값으로!!???어떻게하지
+
+let isfirst = true;
+
 export default class CalendarTab extends Component {
     static navigationOptions = {
         tabBarIcon: ({ tintColor }) => (
             <Ionicons name={'ios-calendar'} style={{  fontSize:30,color: tintColor }} />
         )
+    }
+
+    // 흔들면 db에서 데이터 받아오기
+    async componentWillMount() {
+        ShakeEventExpo.addListener(() => {
+
+            //처음이면 테스트 데이터 넣기
+            if (isfirst) {
+              isfirst= false;
+              const strTime = "2020-01-14"
+              const strPlace = "default_place"
+              let getID
+              // schedule에 날짜,장소넣기 -> 해당id받아오기 -> 그id의 calendar에 넣기
+              db.transaction(tx => {
+                tx.executeSql(
+                  `INSERT INTO schedule (datestr, place) VALUES (?,?)`,[strTime, strPlace]
+                );
+                tx.executeSql(
+                  `SELECT id FROM schedule WHERE datestr = strTime AND place = strPlace`,
+                  [],(tx,results)=>{
+                    getID = results.rows.item(0).id
+                  }
+                );
+                tx.executeSql(
+                  `INSERT INTO calendar (userid, scheduleid) VALUES (?,?)`,[myID, getID]
+                );
+              });
+              this.state.items[strTime].push({name:strPlace});
+            }
+            
+            // 데이터 받아오기
+            db.transaction(tx => {
+                tx.executeSql(
+                    `SELECT schedule.datestr, schedule.place FROM calendar, schedule WHERE calendar.userid = myID and calendar.scheduleid = schedule.id`,
+                    [],(tx,results)=>{
+                        const rows = result.rows;
+                        for(let i=0; i<rows.length; i++){
+                            this.state.items[rows.item(i).date].push({name:rows.item(i).place});
+                        }
+                    }
+                ) 
+            });
+            const newItems = {};
+            Object.keys(this.state.items).forEach(key => {newItems[key] = this.state.items[key];});
+            this.setState({
+              items: newItems
+            });
+            console.log('Shake Shake Shake');
+        });
     }
 
     constructor(props) {
@@ -27,14 +87,23 @@ export default class CalendarTab extends Component {
     }
     loadItems(day) {
         this.initCalendarItems(day)
-        const newItems = {}
+        
+          db.transaction(tx => {
+            tx.executeSql(
+                `SELECT schedule.datee, schedule.place FROM calendar, schedule WHERE calendar.userid = myID and calendar.scheduleid = schedule.id`,
+                [],(tx,results)=>{
+                    const rows = result.rows;
+                    for(let i=0; i<rows.length; i++){
+                        this.state.items[rows.item(i).datee].push({name:rows.item(i).place});
+                    }
+                }
+            ) 
+        });
+        const newItems = {};
         Object.keys(this.state.items).forEach(key => {newItems[key] = this.state.items[key];});
         this.setState({
           items: newItems
         });
-        // db.transaction(tx => {
-        //     tx.executeSql("insert ")
-        // })
     }
   
     render() {
@@ -54,9 +123,7 @@ export default class CalendarTab extends Component {
     }
     onDayPress(day){
         console.log('Agenda : day pressed'+day)
-    }
-    
-  
+    } 
   
     addItem(day){
         
@@ -70,7 +137,7 @@ export default class CalendarTab extends Component {
   
     renderEmptyDate() {
       return (
-        <View style={styles.emptyDate}><Text>This is empty date!</Text></View>
+        <View style={styles.emptyDate}><Text> </Text></View>
       );
     }
   
