@@ -1,7 +1,12 @@
 {
   "expo": {
+<<<<<<< HEAD
     "name": "test1",
     "slug": "test1",
+=======
+    "name": "calendardbtes784",
+    "slug": "calendardbtes784",
+>>>>>>> fd07ca1504197bf4c7f0eb6c964e35d84a6ea381
     "privacy": "public",
     "sdkVersion": "36.0.0",
     "platforms": [
@@ -13,7 +18,7 @@
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "splash": {
-      "image": "./assets/images/splash.png",
+      "image": "./assets/images/heartintro1.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
