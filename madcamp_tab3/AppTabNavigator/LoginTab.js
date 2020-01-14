@@ -3,6 +3,9 @@ import { Text, View, StyleSheet, Button, Image } from "react-native";
 // import firebase from 'firebase'
 import * as Google from "expo-google-app-auth";
 
+import * as SQLite from 'expo-sqlite'
+const db = SQLite.openDatabase('mydb.db')
+
 const IOS_CLIENT_ID =
   "160906070853-upsuj9ggbff34uukalarkduqbinget9j.apps.googleusercontent.com";
 const ANDROID_CLIENT_ID =
@@ -15,6 +18,14 @@ export default class LoginScreen extends Component {
     this.state = {
         userID: 0
     };
+  }
+
+  componentDidMount() {
+    db.transaction(tx => {
+      tx.executeSql(
+        "CREATE TABLE if not exists user ( id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT )"
+      );
+    });
   }
 
   signInWithGoogle = async () => {
@@ -35,10 +46,10 @@ export default class LoginScreen extends Component {
         // 이름넣기 -> 해당id를 userID로 setstate
         db.transaction(tx => {
           tx.executeSql(
-            `INSERT INTO user (name) VALUES (?)`,[myname]
-          );
+            'INSERT INTO user (name) VALUES (?)',[myname]
+          );       
           tx.executeSql(
-            `SELECT id FROM user WHERE name = myname`,
+            'SELECT id FROM user WHERE name = myname',                     
             [],(tx,results)=>{
                 this.setState({userID : results.rows.item(0).id}) 
             }

@@ -9,7 +9,7 @@ import DatePickerScreen from './DatePickerScreen'
 import MyQuestion from '../Components/MyQuestion';
 
 import * as SQLite  from 'expo-sqlite'
-const db = SQLite.openDatabase('C:\Users\q\final_week3_madcamp\madcamp_tab3\mydb.db')
+const db = SQLite.openDatabase('mydb.db')
 
 let friends = new Array(); // 선택된 친구들을 저장하기 위한 배열 추후에 문자열로 이어붙일 것임
 
@@ -102,8 +102,6 @@ class MeetMeetScreen extends Component {
           <Text style={{width: '60%', fontSize: 15, fontWeight:10, justifyContent: 'center'}}>name: {this.state.name}, date:{this.state.date}, place: {this.state.place}, what: {this.state.what}, memo: {this.state.memo}</Text>
           <Button  color='#fff' title="send" style={{fontSize:10}}
             onPress={()=>{ 
-              ///////////////////////////여기 db...
-
               // datetimepicker로 받은 값 파싱 (2020-01-15T03:48:50 이런식으로나옴)
               let strDate = this.state.date.split('T')[0]
               let strTime = this.state.date.split('T')[1]
@@ -112,16 +110,16 @@ class MeetMeetScreen extends Component {
               // schedule에 날짜,장소넣기 -> 해당id받아오기 -> 그id의 calendar에 넣기
               db.transaction(tx => {
                   tx.executeSql(
-                    `INSERT INTO schedule (datestr, time, people, place, activity, memo) VALUES (?,?,?,?,?,?)`,[strDate, strTime, this.state.name, this.state.place, this.state.what, this.state.memo]
+                    'INSERT INTO schedule (datestr, timestr, people, place, activity, memo) VALUES (?,?,?,?,?,?)',[strDate, strTime, this.state.name, this.state.place, this.state.what, this.state.memo]
                   );
                   tx.executeSql(
-                    `SELECT id FROM schedule WHERE datestr = strDate AND time = strTime`,
+                    'SELECT id FROM schedule WHERE datestr = strDate AND timestr = strTime',
                     [],(tx,results)=>{
                       getID = results.rows.item(0).id
                     }
                   );
                   tx.executeSql(
-                    `INSERT INTO calendar (userid, scheduleid) VALUES (?,?)`,[myID, getID]
+                    'INSERT INTO calendar (userid, scheduleid) VALUES (?,?)',[myID, getID]
                   );
               });
 
