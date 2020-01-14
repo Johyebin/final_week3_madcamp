@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
     container:{
         flex:1,
         background: '#fff',
-        margin: 5,
+        margin: 3,
     }
 }
 )

@@ -12,7 +12,7 @@ export default class MyFriendElements extends Component {
               <Text style={styles.name}>{this.props.username}</Text>
             </View>
             <View style={styles.userComment}>
-              <Text color="white">{this.props.statusLine}</Text>
+              <Text>{this.props.statusLine}</Text>
             </View>
           </View>
         )
@@ -23,14 +23,7 @@ const styles = StyleSheet.create({
     container: {
       flex: 1,
     },
-    header: {
-      height:60,
-      backgroundColor:'green',
-    },
-    footer: {
-      height:60,
-      backgroundColor:'green',
-    },
+
     content: {
       flex:1,
     },
@@ -40,9 +33,11 @@ const styles = StyleSheet.create({
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'space-between',
-      borderColor:'#eee',
-      borderBottomWidth:0.5,
+      borderColor:'#d1cece',
+      borderBottomWidth:1,
       padding: 5,
+      marginRight: 3,
+      background: '#fff'
     },
     userInfo: {
       flexDirection: 'row',
