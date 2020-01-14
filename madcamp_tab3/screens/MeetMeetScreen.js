@@ -35,78 +35,64 @@ class MeetMeetScreen extends Component {
           {/* <Button title="WHEN" onPress={()=>{this.props.navigation.navigate('When')}}></Button>
         </View> */} 
 
-          <View style={{width: '100%'}}>
-          <View>
-            <Text>WHEN</Text>
+        <View style={styles.header}>
+          <View style={styles.row}>
+            <Text style={styles.title}>When</Text>
             {/* <TextInput style={styles.input}></TextInput> */}
-            <TextInput
-         style={styles.input}
-         placeholder='Enter Friends Name'
+            <TextInput style={styles.input} placeholder='Enter Date And Time'
           onChangeText={(val) => {this.setState({date: val})}}/>
             <Button title="OK"></Button>
           </View>
+        </View>
 
-        <View style={{width: '100%'}}>
-          <View>
-            <Text>WHO</Text>
+        <View style={styles.content}>
+          <View style={styles.row}>
+            <Text style={styles.title}>Who</Text>
             {/* <TextInput style={styles.input}></TextInput> */}
-            <TextInput
-        style={styles.input}
-        placeholder='Enter Friends Name'
-        onChangeText={(val) => {this.setState({name: val})}}/>
+            <TextInput style={styles.input} placeholder='Enter Friends Name'
+          onChangeText={(val) => {this.setState({name: val})}}/>
             <Button title="OK"></Button>
           </View>
 
-           <View>
-            <Text>WHERE</Text>
+          <View style={styles.row}>
+            <Text style={styles.title}>Where</Text>
             {/* <TextInput style={styles.input}></TextInput> */}
-            <TextInput
-        style={styles.input}
-        placeholder='Enter Friends Name'
-        onChangeText={(val) => {this.setState({place: val})}}/>
-            <Button title="OK"></Button>
-          </View>
-
-          <View>
-            <Text>WHAT</Text>
-            {/* <TextInput style={styles.input}></TextInput> */}
-            <TextInput
-        style={styles.input}
-        placeholder='Enter Friends Name'
-        onChangeText={(val) => {this.setState({what: val})}}/>
-            <Button title="OK"></Button>
-          </View>
-
-          <View>
-            <Text>MEMO</Text>
-            {/* <TextInput style={styles.input}></TextInput> */}
-            <TextInput
-            multiline
-        style={styles.input}
-        placeholder='Enter Friends Name'
-        onChangeText={(val) => {this.setState({memo: val})}}/>
+            <TextInput style={styles.input} placeholder='Enter Place Name'
+          onChangeText={(val) => {this.setState({place: val})}}/>
             <Button title="OK"></Button>
           </View>
 
 
-          <View style={{width: '100%'}}>
-      <View style={styles.last}>
-        <Text style={{width: '50%', fontSize: 15, fontWeight:300}}>name: {this.state.name}, date:{this.state.date}, place: {this.state.place}, what: {this.state.what}, memo: {this.state.memo}</Text>
-        <Button  color='#be1323' title="send" style={{fontSize:10}} onPress={()=>{ 
-          ///////////////////////////여기 db...
-          Alert.alert('Send Success')}}></Button>
-      </View>
-      </View>
+          <View style={styles.row}>
+            <Text style={styles.title}>What</Text>
+            {/* <TextInput style={styles.input}></TextInput> */}
+            <TextInput style={styles.input} placeholder='Enter Want to do'
+          onChangeText={(val) => {this.setState({what: val})}}/>
+            <Button title="OK"></Button>
+          </View>
 
-          </View>  
-          </View>    
+
+          <View style={styles.row}>
+            <Text style={styles.title}>Memo</Text>
+            {/* <TextInput style={styles.input}></TextInput> */}
+            <TextInput style={styles.input} placeholder='Enter Memo'
+          onChangeText={(val) => {this.setState({memo: val})}}/>
+            <Button title="OK"></Button>
+          </View>
+          </View>
+
+          <View style={styles.footer}>
+        <Text style={{width: '60%', fontSize: 15, fontWeight:10, justifyContent: 'center'}}>name: {this.state.name}, date:{this.state.date}, place: {this.state.place}, what: {this.state.what}, memo: {this.state.memo}</Text>
+        <Button  color='#fff' title="send" style={{fontSize:10}} onPress={()=>{Alert.alert('Send Success')}}></Button>
+         </View>
+  
       </Container>
     )
   }
 
 }
 
-export default MeetMeetScreen
+export default MeetMeetScreen;
 
 const styles = StyleSheet.create({
   container: {
@@ -116,13 +102,31 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center"
   },
+  header:{
+    width: '100%',
+    flex:1,
+    backgroundColor: '#be1323'
+  },
+  content:{
+    width: '100%',
+    flex:3
+  },
+  footer:{
+    width: '100%',
+    flex:1,
+    backgroundColor: '#be1323'
+  },
   input: {
     borderWidth: 1,
+    borderRadius: 5,
     borderColor: '#777',
     backgroundColor: '#fff',
     padding: 8,
     margin: 10,
     width: 200,
+  },
+  title:{
+    margin:5,
   },
   row: {
     flex: 1,
