@@ -10,7 +10,7 @@ const db = SQLite.openDatabase('C:\Users\q\final_week3_madcamp\madcamp_tab3\mydb
 
 
 let myID = 1;
-// 일단 테스트용으로 내아이디 고정시켜놓고.... 원래는 로그인해서 받아온값으로!!
+// 일단 테스트용으로 1로 그냥 고정시켜놓고.... 원래는 로그인해서 받아온값으로!!???어떻게하지
 
 let isfirst = true;
 
@@ -30,20 +30,29 @@ export default class CalendarTab extends Component {
               isfirst= false;
               const strTime = "2020-01-14"
               const strPlace = "default_place"
+              let getID
+              // schedule에 날짜,장소넣기 -> 해당id받아오기 -> 그id의 calendar에 넣기
               db.transaction(tx => {
                 tx.executeSql(
-                  `INSERT INTO schedule (datee, where) values (?,?)`,[strTime, strPlace]
+                  `INSERT INTO schedule (datestr, place) VALUES (?,?)`,[strTime, strPlace]
                 );
                 tx.executeSql(
-                  `INSERT INTO calendar (userid, scheduleid) values (?,?)`,[myID, 1]
+                  `SELECT id FROM schedule WHERE datestr = strTime AND place = strPlace`,
+                  [],(tx,results)=>{
+                    getID = results.rows.item(0).id
+                  }
+                );
+                tx.executeSql(
+                  `INSERT INTO calendar (userid, scheduleid) VALUES (?,?)`,[myID, getID]
                 );
               });
               this.state.items[strTime].push({name:strPlace});
             }
-        
+            
+            // 데이터 받아오기
             db.transaction(tx => {
                 tx.executeSql(
-                    `SELECT schedule.datee, schedule.place FROM calendar, schedule WHERE calendar.userid = myID and calendar.scheduleid = schedule.id`,
+                    `SELECT schedule.datestr, schedule.place FROM calendar, schedule WHERE calendar.userid = myID and calendar.scheduleid = schedule.id`,
                     [],(tx,results)=>{
                         const rows = result.rows;
                         for(let i=0; i<rows.length; i++){
