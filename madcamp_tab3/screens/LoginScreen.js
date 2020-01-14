@@ -62,7 +62,8 @@ export default class LoginScreen extends Component {
       <View style={styles.container}>
         <Image style={styles.image}source={require('../assets/images/intro.png')} />
         {/* 로그인 페이지에서 보여줄 이미지 세팅하기 */}
-        <Button title="Login with Google" color="white" onPress={this.signInWithGoogle} />
+        <Button title="Sign in Google" onPress={this.signInWithGoogle}>
+        </Button>
       </View>
     );
   }

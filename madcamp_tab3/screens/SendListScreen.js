@@ -31,29 +31,29 @@ export default class SendListScreen extends Component {
          </Card> */}
      {/* 여기에 지정해주는 사항을 모델 클래스인 List클래스에서 변경할 수 있다 / 디비에서 받아서 동적으로 셋팅할수 있게 됨 */}
      <MyList
-     name="group1"
-     description="with Jane,Hyebin,.."
+     name="조혜빈, 이제인, 배성희"
+     description="매콤이 닭발"
      date="01/14/2020"
      time="pm 12:00"
      img={require('../assets/images/robot-dev.png')}
      />
      <MyList
-     name="group2"
-     description="with YoungIn,Hyebin,.."
+     name="서지연, 양초연, 이민서"
+     description="순천시 연향동 dope"
      date="01/17/2020"
      time="pm 14:00"
      img={require('../assets/images/robot-prod.png')}
      />
       <MyList
-     name="group3"
-     description="with YoungIn,Pretty,.."
+     name="이제인과 아이들"
+     description="한양대 과방"
      date="01/27/2020"
      time="am 07:00"
      img={require('../assets/images/robot-dev.png')}
      />
       <MyList
-     name="group4"
-     description="with Family"
+     name="조진성, 조현준"
+     description="카이코노"
      date="01/27/2020"
      time="pm 16:00"
      img={require('../assets/images/robot-prod.png')}

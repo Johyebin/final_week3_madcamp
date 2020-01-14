@@ -11,10 +11,9 @@ export default class ProfileScreen extends Component {
           Welcome,{this.props.navigation.getParam("username")}
         </Text>
         <Button
-          color="#be1323"
-          title="Sign Out"
-          onPress={() => this.props.navigation.navigate("Login")}
-        />
+          color="#be1323" title="Sign Out"
+          onPress={() => this.props.navigation.navigate("Login")}>
+          </Button>
         <Button
          color="#be1323"
           title="Start MeetMeet"
