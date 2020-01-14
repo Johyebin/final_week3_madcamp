@@ -1,12 +1,7 @@
 {
   "expo": {
-<<<<<<< HEAD
     "name": "test1",
     "slug": "test1",
-=======
-    "name": "calendardbtes784",
-    "slug": "calendardbtes784",
->>>>>>> fd07ca1504197bf4c7f0eb6c964e35d84a6ea381
     "privacy": "public",
     "sdkVersion": "36.0.0",
     "platforms": [
