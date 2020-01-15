@@ -8,7 +8,7 @@ export default class MyList extends Component {
     render(){
         return (
            <Card style={styles.container}>
-               <CardItem button>
+               <CardItem button onPress={{}}>
                    <Left>
                     <Thumbnail source={this.props.img} //source={require('../assets/images/robot-dev.png')}
                     // <Thumbnail source={require('../assets/images/robot-dev.png')}

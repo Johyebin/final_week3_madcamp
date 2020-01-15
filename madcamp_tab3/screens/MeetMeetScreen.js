@@ -139,7 +139,7 @@ const styles = StyleSheet.create({
   },
   title:{
     margin:5,
-    width: '100%',
+    width: '90%',
     marginTop:'15%',
     alignContent: 'center',
     fontSize:30,

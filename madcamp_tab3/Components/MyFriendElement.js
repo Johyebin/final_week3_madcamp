@@ -12,7 +12,7 @@ export default class MyFriendElements extends Component {
               <Text style={styles.name}>{this.props.username}</Text>
             </View>
             <View style={styles.userComment}>
-              <Text color='white'>{this.props.statusLine}</Text>
+              <Text style={{color: 'white'}}>{this.props.statusLine}</Text>
             </View>
           </View>
         )
