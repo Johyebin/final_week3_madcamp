@@ -8,7 +8,10 @@ export default class MyFriendElements extends Component {
         return (
             <View style={styles.elem}>
             <View style={styles.userInfo}>
-              <View style={styles.profile} />
+              <Image
+               style={styles.profile}
+                 source={require('../assets/images/heartintro4.png')}
+               />
               <Text style={styles.name}>{this.props.username}</Text>
             </View>
             <View style={styles.userComment}>
@@ -49,10 +52,11 @@ const styles = StyleSheet.create({
       borderRadius:5,
     },
     profile: {
-      width: 50,
-      height: 50,
-      borderRadius: 25,
+      width: 40,
+      height: 40,
+      borderRadius: 20,
       backgroundColor: '#be1323',
+      resizeMode:'contain'
     },
     name: {
       paddingLeft: 10,

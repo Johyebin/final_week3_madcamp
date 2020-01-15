@@ -8,8 +8,13 @@ import { TextInput } from "react-native-gesture-handler";
 import DatePickerScreen from './DatePickerScreen'
 import MyQuestion from '../Components/MyQuestion';
 
+import * as SQLite  from 'expo-sqlite'
+const db = SQLite.openDatabase('mydb.db')
+
 let friends = new Array(); // 선택된 친구들을 저장하기 위한 배열 추후에 문자열로 이어붙일 것임
 
+let myID = 1;
+// 일단 테스트용으로 1로 그냥 고정시켜놓고.... 원래는 로그인해서 받아온값으로!!???어떻게하지
 
 class MeetMeetScreen extends Component {
   constructor(props) {
@@ -18,7 +23,7 @@ class MeetMeetScreen extends Component {
 
   state = {
     name : "조혜빈",
-    date : "01/14/2020",
+    date : "2020-01-14T03:54:34",
     place : "restaurant",
     what : "eat lunch",
     memo : "only special"
@@ -26,7 +31,7 @@ class MeetMeetScreen extends Component {
   
   render() {
     return (
-      <Container style={styles.container}>
+    <Container style={styles.container}>
         {/* <View style={{flexDirection:'row'}}>
           {/* <Button title="WHO" onPress={()=>{this.props.navigation.navigate('Who')}}></Button> */}
           {/* <Button title="WHEN" onPress={()=>{this.props.navigation.navigate('When')}}></Button>
@@ -36,6 +41,7 @@ class MeetMeetScreen extends Component {
           <View>
             <Text style={styles.title}>What you want Schedule ?</Text>
             {/* <TextInput style={styles.input}></TextInput> */}
+
             {/* <TextInput style={styles.input} placeholder='Enter Date And Time' */}
           {/* onChangeText={(val) => {this.setState({date: val})}}/> */}
           </View>
@@ -83,17 +89,39 @@ class MeetMeetScreen extends Component {
           onChangeText={(val) => {this.setState({memo: val})}}/>
             {/* <Button title="OK" color="#be1323"></Button> */}
           </View>
-          </View>
+        </View>
+
 
           <View style={styles.footer}>
         {/* <Text style={{width: '%', fontSize: 15, fontWeight:10, justifyContent: 'center'}}>name: {this.state.name}, date:{this.state.date}, place: {this.state.place}, what: {this.state.what}, memo: {this.state.memo}</Text> */}
         <Button title="send" color="black" style={{fontSize:10, fontWeight:15}} onPress={()=>{
-            Alert.alert('Send Success',"Name: "+this.state.name+", Date: "+this.state.date+", Place: "+this.state.place+", What: "+this.state.what+", Memo: "+this.state.memo)}}>
+
+              // datetimepicker로 받은 값 파싱 (2020-01-15T03:48:50 이런식으로나옴)
+              let strDate = this.state.date.split('T')[0]
+              let strTime = this.state.date.split('T')[1]
+              
+              let getID
+              // schedule에 날짜,장소넣기 -> 해당id받아오기 -> 그id의 calendar에 넣기
+              db.transaction(tx => {
+                  tx.executeSql(
+                    'INSERT INTO schedule (datestr, timestr, people, place, activity, memo) VALUES (?,?,?,?,?,?)',[strDate, strTime, this.state.name, this.state.place, this.state.what, this.state.memo]
+                  );
+                  tx.executeSql(
+                    'SELECT id FROM schedule WHERE datestr = strDate AND timestr = strTime',
+                    [],(tx,results)=>{
+                      getID = results.rows.item(0).id
+                    }
+                  );
+                  tx.executeSql(
+                    'INSERT INTO calendar (userid, scheduleid) VALUES (?,?)',[myID, getID]
+                  );
+              });
+
+             Alert.alert('Send Success',"Name: "+this.state.name+", Date: "+this.state.date+", Place: "+this.state.place+", What: "+this.state.what+", Memo: "+this.state.memo)}}>
           <Ionicons name={"ios-paper-plane"}/>
         </Button>
-         </View>
-  
-      </Container>
+        </View>
+    </Container>
     )
   }
 
@@ -142,7 +170,7 @@ const styles = StyleSheet.create({
     width: '90%',
     marginTop:'15%',
     alignContent: 'center',
-    fontSize:30,
+    fontSize:25,
     fontWeight:'bold',
     justifyContent: 'center'
   },

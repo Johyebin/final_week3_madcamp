@@ -5,14 +5,17 @@ import { Ionicons } from '@expo/vector-icons'
 
 import { ShakeEventExpo } from '../Components/ShakeEventExpo'
 
-import * as SQLite  from 'expo-sqlite'
-const db = SQLite.openDatabase('C:\Users\q\final_week3_madcamp\madcamp_tab3\mydb.db')
+import * as SQLite from 'expo-sqlite'
+const db = SQLite.openDatabase('mydb.db')
 
 
 let myID = 1;
 // 일단 테스트용으로 1로 그냥 고정시켜놓고.... 원래는 로그인해서 받아온값으로!!???어떻게하지
 
-let isfirst = true;
+var shakecnt=0;
+
+var strDates = ['2020-01-14', '2020-01-17', '2020-01-27', '2020-01-27']
+var strNames = ['pm 12:00 조혜빈, 이제인, 배성희\n 아름관 화끈이닭발', 'pm 14:00 서지연, 양초연, 이민서\n 순천시 연향동 dope', 'am 07:00 이제인과 아이들\n 한양대 과방', 'pm 16:00 조진성, 조현준\n 카이코노']
 
 export default class CalendarTab extends Component {
     static navigationOptions = {
@@ -21,42 +24,64 @@ export default class CalendarTab extends Component {
         )
     }
 
+    componentDidMount() {
+      db.transaction(tx => {
+        tx.executeSql(
+          "CREATE TABLE IF NOT EXISTS calendar ( id INTEGER PRIMARY KEY AUTOINCREMENT, userid INTEGER, scheduleid INTEGER );"
+        );
+        tx.executeSql(
+          "CREATE TABLE IF NOT EXISTS schedule ( id INTEGER PRIMARY KEY AUTOINCREMENT, datestr TEXT, timestr TEXT, people TEXT, place TEXT, activity TEXT, memo TEXT );"
+        );
+      });
+    }
+  
+
     // 흔들면 db에서 데이터 받아오기
     async componentWillMount() {
         ShakeEventExpo.addListener(() => {
 
             //처음이면 테스트 데이터 넣기
-            if (isfirst) {
-              isfirst= false;
-              const strTime = "2020-01-14"
-              const strPlace = "default_place"
-              let getID
-              // schedule에 날짜,장소넣기 -> 해당id받아오기 -> 그id의 calendar에 넣기
-              db.transaction(tx => {
-                tx.executeSql(
-                  `INSERT INTO schedule (datestr, place) VALUES (?,?)`,[strTime, strPlace]
-                );
-                tx.executeSql(
-                  `SELECT id FROM schedule WHERE datestr = strTime AND place = strPlace`,
-                  [],(tx,results)=>{
-                    getID = results.rows.item(0).id
-                  }
-                );
-                tx.executeSql(
-                  `INSERT INTO calendar (userid, scheduleid) VALUES (?,?)`,[myID, getID]
-                );
-              });
-              this.state.items[strTime].push({name:strPlace});
+            // if (isfirst) {
+            //   isfirst= false;
+            //   const strDate = "2020-01-12"
+            //   const strTime = "03:45:23"
+            //   const strPlace = "default_place"
+
+            //   let getID
+            //   // schedule에 날짜,장소넣기 -> 해당id받아오기 -> 그id의 calendar에 넣기
+            //   db.transaction(tx => {
+            //     tx.executeSql(
+            //       'INSERT INTO schedule (datestr, place) VALUES (?,?)',[strDate, strPlace]
+            //     );
+            //     tx.executeSql(
+            //       'SELECT id FROM schedule WHERE datestr = strDate AND place = strPlace',
+            //       [],(tx,results)=>{
+            //         getID = results.rows.item(0).id
+            //       }
+            //     );
+            //     tx.executeSql(
+            //       'INSERT INTO calendar (userid, scheduleid) VALUES (?,?)',[myID, getID]
+            //     );
+            //   });
+            //   this.state.items[strDate].push({name:strPlace});
+            // }
+
+
+            // 디비가 안돌아가서 일단이걸로............
+            if(shakecnt<4){
+              this.state.items[strDates[shakecnt]].push({name:strNames[shakecnt]});
+              shakecnt=shakecnt+1
             }
+
             
             // 데이터 받아오기
             db.transaction(tx => {
                 tx.executeSql(
-                    `SELECT schedule.datestr, schedule.place FROM calendar, schedule WHERE calendar.userid = myID and calendar.scheduleid = schedule.id`,
+                    'SELECT schedule.datestr, schedule.place FROM calendar, schedule WHERE calendar.userid = myID and calendar.scheduleid = schedule.id',
                     [],(tx,results)=>{
-                        const rows = result.rows;
+                        const rows = results.rows;
                         for(let i=0; i<rows.length; i++){
-                            this.state.items[rows.item(i).date].push({name:rows.item(i).place});
+                            this.state.items[rows.item(i).datestr].push({name:rows.item(i).place});
                         }
                     }
                 ) 
@@ -67,6 +92,7 @@ export default class CalendarTab extends Component {
               items: newItems
             });
             console.log('Shake Shake Shake');
+
         });
     }
 
@@ -86,19 +112,20 @@ export default class CalendarTab extends Component {
         }
     }
     loadItems(day) {
-        this.initCalendarItems(day)
-        
-          db.transaction(tx => {
+         db.transaction(tx => {
             tx.executeSql(
-                `SELECT schedule.datee, schedule.place FROM calendar, schedule WHERE calendar.userid = myID and calendar.scheduleid = schedule.id`,
+                'SELECT schedule.datestr, schedule.place FROM calendar, schedule WHERE calendar.userid = myID and calendar.scheduleid = schedule.id',
                 [],(tx,results)=>{
                     const rows = result.rows;
                     for(let i=0; i<rows.length; i++){
-                        this.state.items[rows.item(i).datee].push({name:rows.item(i).place});
+                        this.state.items[rows.item(i).datestr].push({name:rows.item(i).place});
                     }
                 }
             ) 
         });
+        
+        this.initCalendarItems(day)
+
         const newItems = {};
         Object.keys(this.state.items).forEach(key => {newItems[key] = this.state.items[key];});
         this.setState({

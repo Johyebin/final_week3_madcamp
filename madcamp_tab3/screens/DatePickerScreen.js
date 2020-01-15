@@ -48,8 +48,8 @@ export default class DatePickerScreen extends Component {
          </View>
       </View>
         );
-      }
-    }
+  }
+}
 
     const styles = StyleSheet.create({
       container: {

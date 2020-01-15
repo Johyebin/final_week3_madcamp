@@ -3,12 +3,30 @@ import { Text, View, StyleSheet, Button, Image } from "react-native";
 // import firebase from 'firebase'
 import * as Google from "expo-google-app-auth";
 
+import * as SQLite from 'expo-sqlite'
+const db = SQLite.openDatabase('mydb.db')
+
 const IOS_CLIENT_ID =
   "160906070853-upsuj9ggbff34uukalarkduqbinget9j.apps.googleusercontent.com";
 const ANDROID_CLIENT_ID =
   "your-android-client-id";
 
 export default class LoginScreen extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+        userID: 0
+    };
+  }
+
+  componentDidMount() {
+    db.transaction(tx => {
+      tx.executeSql(
+        "CREATE TABLE if not exists user ( id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT )"
+      );
+    });
+  }
 
   signInWithGoogle = async () => {
     try {
@@ -20,10 +38,26 @@ export default class LoginScreen extends Component {
       });
 
       if (result.type === "success") {
-        console.log("LoginScreen.js.js 21 | ", result.user.givenName);
-        this.props.navigation.navigate("Profile", {username: result.user.givenName}  ); //after Google login redirect to Profile
+        const myname = result.user.givenName
+        console.log("LoginScreen.js.js 21 | ", myname);
+        this.props.navigation.navigate("Profile", {username: myname}  ); //after Google login redirect to Profile
+
+        // db에 유저 정보 넣기
+        // 이름넣기 -> 해당id를 userID로 setstate
+        db.transaction(tx => {
+          tx.executeSql(
+            'INSERT INTO user (name) VALUES (?)',[myname]
+          );       
+          tx.executeSql(
+            'SELECT id FROM user WHERE name = myname',                     
+            [],(tx,results)=>{
+                this.setState({userID : results.rows.item(0).id}) 
+            }
+          );
+        });
         return result.accessToken; // 해당 엑세스토큰으로 추가 정보를 얻어올 수 있다.
-      } else {
+      }
+      else {
         return { cancelled: true };
       }
     } catch (e) {
