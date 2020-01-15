@@ -34,13 +34,43 @@ export default class FriendsScreen extends Component {
                 statusLine="오늘 1000일"/>
                  <MyFriendElement
                 username="김맥주"
-                statusLine=""/>
+                statusLine="맥주와 함께라면"/>
                  <MyFriendElement
                 username="조맥주"
-                statusLine="나는 맥주가 좋다"/>
+                statusLine=""/>
                  <MyFriendElement
                 username="조혜빈"
-                statusLine="대화명을 입력하세요"/>
+                statusLine="매드캠프 짱"/>
+                 <MyFriendElement
+                username="이제인"
+                statusLine="남자친구 생겼습니다"/>
+                 <MyFriendElement
+                username="이치킨"
+                statusLine="치킨먹고 싶다"/>
+                 <MyFriendElement
+                username="백설기"
+                statusLine="떡아님"/>
+                 <MyFriendElement
+                username="조맥주"
+                statusLine="맥주다"/>
+                 <MyFriendElement
+                username="조혜빈"
+                statusLine="매드캠프 짱"/>
+                 <MyFriendElement
+                username="이제인"
+                statusLine="남자친구 생겼습니다"/>
+                 <MyFriendElement
+                username="이치킨"
+                statusLine="치킨먹고 싶다"/>
+                 <MyFriendElement
+                username="김맥주"
+                statusLine="맥주와 함께라면"/>
+                 <MyFriendElement
+                username="조맥주"
+                statusLine=""/>
+                 <MyFriendElement
+                username="조혜빈"
+                statusLine="매드캠프 짱"/>
                  <MyFriendElement
                 username="이제인"
                 statusLine="남자친구 생겼습니다"/>

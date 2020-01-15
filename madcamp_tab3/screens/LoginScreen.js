@@ -60,9 +60,9 @@ export default class LoginScreen extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Image style={styles.image}source={require('../assets/images/intro.png')} />
+        <Image style={styles.image}source={require('../assets/images/heartintro1.png')} />
         {/* 로그인 페이지에서 보여줄 이미지 세팅하기 */}
-        <Button title="Sign in Google" onPress={this.signInWithGoogle}>
+        <Button title="Sign in Google" color="white" onPress={this.signInWithGoogle}>
         </Button>
       </View>
     );
@@ -72,7 +72,7 @@ export default class LoginScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "#be1323",
     alignItems: "center",
     justifyContent: "center"
   },

@@ -39,12 +39,12 @@ export default class DatePickerScreen extends Component {
     return (
       <View style={styles.container}>
         <View style={{flexDirection: 'row'}}>
-          <Button onPress={this.datepicker} title="Show Date" />
-          <Button onPress={this.timepicker} title="Show Time" />
+          <Button onPress={this.datepicker} title="Show Date" color="#be1323" />
+          <Button onPress={this.timepicker} title="Show Time" color="#be1323"/>
         </View>
         <View style={{width:'100%'}}>
         { show && <DateTimePicker value={date} mode={mode} onChange={this.setDate} /> }
-         <Button onPress={() => this.props.navigation.navigate("MeetMeet")} title="Done" />
+         <Button onPress={() => this.props.navigation.navigate("MeetMeet")} title="Done" color="#be1323" />
          </View>
       </View>
         );

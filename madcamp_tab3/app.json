@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "calendardbtes784",
-    "slug": "calendardbtes784",
+    "name": "hell55",
+    "slug": "hell55",
     "privacy": "public",
     "sdkVersion": "36.0.0",
     "platforms": [
@@ -13,7 +13,7 @@
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "splash": {
-      "image": "./assets/images/heartintro1.png",
+      "image": "./assets/images/heartintro2.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
