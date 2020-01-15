@@ -22,8 +22,6 @@ class MeetMeetScreen extends Component {
   }
 
   state = {
-    name : "조혜",
-    date : "2020-01-14T03:54:34",
     name : "조혜빈",
     date : "2020-01-14T03:54:34",
     place : "restaurant",
@@ -121,6 +119,7 @@ class MeetMeetScreen extends Component {
 
              Alert.alert('Send Success',"Name: "+this.state.name+", Date: "+this.state.date+", Place: "+this.state.place+", What: "+this.state.what+", Memo: "+this.state.memo)}}>
           <Ionicons name={"ios-paper-plane"}/>
+        </Button>
         </View>
     </Container>
     )
@@ -168,10 +167,10 @@ const styles = StyleSheet.create({
   },
   title:{
     margin:5,
-    width: '100%',
+    width: '90%',
     marginTop:'15%',
     alignContent: 'center',
-    fontSize:30,
+    fontSize:25,
     fontWeight:'bold',
     justifyContent: 'center'
   },
