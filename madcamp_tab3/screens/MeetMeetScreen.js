@@ -88,7 +88,7 @@ class MeetMeetScreen extends Component {
           <View style={styles.footer}>
         {/* <Text style={{width: '%', fontSize: 15, fontWeight:10, justifyContent: 'center'}}>name: {this.state.name}, date:{this.state.date}, place: {this.state.place}, what: {this.state.what}, memo: {this.state.memo}</Text> */}
         <Button title="send" color="black" style={{fontSize:10, fontWeight:15}} onPress={()=>{
-            Alert.alert('Send Success',"Name: "+this.state.name+", Date: "+this.state.date+", place: "+this.state.place+", what: "+this.state.what+", Memo: "+this.state.memo)}}>
+            Alert.alert('Send Success',"Name: "+this.state.name+", Date: "+this.state.date+", Place: "+this.state.place+", What: "+this.state.what+", Memo: "+this.state.memo)}}>
           <Ionicons name={"ios-paper-plane"}/>
         </Button>
          </View>
