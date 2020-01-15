@@ -121,6 +121,7 @@ class MeetMeetScreen extends Component {
 
              Alert.alert('Send Success',"Name: "+this.state.name+", Date: "+this.state.date+", Place: "+this.state.place+", What: "+this.state.what+", Memo: "+this.state.memo)}}>
           <Ionicons name={"ios-paper-plane"}/>
+          </Button>
         </View>
     </Container>
     )
