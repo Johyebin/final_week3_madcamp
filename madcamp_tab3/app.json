@@ -13,7 +13,7 @@
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "splash": {
-      "image": "./assets/images/heartintro1.png",
+      "image": "./assets/images/heartintro2.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },

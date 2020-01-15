@@ -59,28 +59,28 @@ export default class SendListScreen extends Component {
      img={require('../assets/images/robot-prod.png')}
      />
       <MyList
-     name="group5"
-     description="with Friends"
+     name="김철수, 김탁구, 백설기"
+     description="당구장"
      date="02/27/2020"
      time="am 07:00"
      img={require('../assets/images/robot-dev.png')}
      />
       <MyList
-     name="group6"
+     name="조개강, 산설매, 백두산"
      description="with Dogs"
      date="03/30/2020"
-     time="am 07:00"
+     time="pn 17:00"
      img={require('../assets/images/robot-prod.png')}
      />
        <MyList
-     name="group6"
+     name="코쟁이, 목쟁이, 조식빈"
      description="with Dogs"
      date="03/30/2020"
      time="am 07:00"
-     img={require('../assets/images/robot-prod.png')}
+     img={require('../assets/images/robot-dev.png')}
      />
        <MyList
-     name="group6"
+     name="나재한, 너재한, 백두산"
      description="with Dogs"
      date="03/30/2020"
      time="am 07:00"

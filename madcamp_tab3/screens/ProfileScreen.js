@@ -7,7 +7,7 @@ export default class ProfileScreen extends Component {
     return (
       <View style={styles.container}>
         <Image style={styles.profile} source={require('../assets/images/profile.jpg')} />
-        <Text style={{ fontSize: 20, fontWeight: "bold" }}>
+        <Text style={{color: 'white', fontSize: 20, fontWeight: "bold" }}>
           Welcome,{this.props.navigation.getParam("username")}
         </Text>
         <Button
@@ -32,9 +32,11 @@ const styles = StyleSheet.create({
       justifyContent: "center"
     },
     profile: {
-      width: 200,
-      height: 200,
+      width: 150,
+      height: 150,
       borderRadius: 100,
+      borderWidth: 20,
+      borderColor: '#efefef',
       marginBottom: 50
     }
   });

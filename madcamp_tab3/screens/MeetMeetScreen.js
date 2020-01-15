@@ -16,10 +16,6 @@ let friends = new Array(); // 선택된 친구들을 저장하기 위한 배열 
 let myID = 1;
 // 일단 테스트용으로 1로 그냥 고정시켜놓고.... 원래는 로그인해서 받아온값으로!!???어떻게하지
 
-function init(){
-  
-}
-
 class MeetMeetScreen extends Component {
   constructor(props) {
     super(props)
@@ -27,6 +23,8 @@ class MeetMeetScreen extends Component {
 
   state = {
     name : "조혜",
+    date : "2020-01-14T03:54:34",
+    name : "조혜빈",
     date : "2020-01-14T03:54:34",
     place : "restaurant",
     what : "eat lunch",
@@ -42,66 +40,64 @@ class MeetMeetScreen extends Component {
         </View> */} 
 
         <View style={styles.header}>
-          <View style={styles.row}>
-            <Text style={styles.title}>When</Text>
+          <View>
+            <Text style={styles.title}>What you want Schedule ?</Text>
             {/* <TextInput style={styles.input}></TextInput> */}
-            <TextInput
-              style={styles.input}
-              placeholder='Enter Date And Time'
-                onChangeText={(val) => {this.setState({date: val})}}/>
-            <Button title="OK"></Button>
+
+            {/* <TextInput style={styles.input} placeholder='Enter Date And Time' */}
+          {/* onChangeText={(val) => {this.setState({date: val})}}/> */}
           </View>
         </View>
 
         <View style={styles.content}>
           <View style={styles.row}>
-            <Text style={styles.title}>Who</Text>
+          <Button title="Who" color="#be1323" onPress={()=>{this.props.navigation.navigate("Who")}}/>
             {/* <TextInput style={styles.input}></TextInput> */}
-            <TextInput
-              style={styles.input}
-              placeholder='Enter Friends Name'
-              onChangeText={(val) => {this.setState({name: val})}}/>
-            <Button title="OK"></Button>
+            <TextInput style={styles.input} placeholder='Enter Friends Name'
+          onChangeText={(val) => {this.setState({name: val})}}/>
+            {/* <Button title="OK" color="#be1323"/> */}
           </View>
 
           <View style={styles.row}>
-            <Text style={styles.title}>Where</Text>
+          <Button title="When" color="#be1323" onPress={()=>{this.props.navigation.navigate("When")}}/>
             {/* <TextInput style={styles.input}></TextInput> */}
-            <TextInput
-              style={styles.input}
-              placeholder='Enter Place Name'
-              onChangeText={(val) => {this.setState({place: val})}}/>
-            <Button title="OK"></Button>
+            <TextInput style={styles.input} placeholder='Enter Want Date'
+          onChangeText={(val) => {this.setState({date: val})}}/>
+            {/* <Button title="OK" color="#be1323"/> */}
           </View>
 
-
           <View style={styles.row}>
-            <Text style={styles.title}>What</Text>
+          <Button title="Where" color="#be1323"/>
             {/* <TextInput style={styles.input}></TextInput> */}
-            <TextInput
-              style={styles.input}
-              placeholder='Enter Want to do'
-              onChangeText={(val) => {this.setState({what: val})}}/>
-            <Button title="OK"></Button>
+            <TextInput style={styles.input} placeholder='Enter Place Name'
+          onChangeText={(val) => {this.setState({place: val})}}/>
+            {/* <Button title="OK" color="#be1323"></Button> */}
           </View>
 
 
           <View style={styles.row}>
-            <Text style={styles.title}>Memo</Text>
+          <Button title="What" color="#be1323"/>
             {/* <TextInput style={styles.input}></TextInput> */}
-            <TextInput multiline
-              style={styles.input}
-              placeholder='Enter Memo'
-              onChangeText={(val) => {this.setState({memo: val})}}/>
-            <Button title="OK"></Button>
+            <TextInput style={styles.input} placeholder='Enter Want to do'
+          onChangeText={(val) => {this.setState({what: val})}}/>
+            {/* <Button title="OK" color="#be1323"></Button> */}
+          </View>
+
+
+          <View style={styles.row}>
+          <Button title="Memo" color="#be1323"/>
+            {/* <TextInput style={styles.input}></TextInput> */}
+            <TextInput style={styles.input} placeholder='Enter Memo'
+          onChangeText={(val) => {this.setState({memo: val})}}/>
+            {/* <Button title="OK" color="#be1323"></Button> */}
           </View>
         </View>
 
 
-        <View style={styles.footer}>
-          <Text style={{width: '60%', fontSize: 15, fontWeight:10, justifyContent: 'center'}}>name: {this.state.name}, date:{this.state.date}, place: {this.state.place}, what: {this.state.what}, memo: {this.state.memo}</Text>
-          <Button  color='#fff' title="send" style={{fontSize:10}}
-            onPress={()=>{ 
+          <View style={styles.footer}>
+        {/* <Text style={{width: '%', fontSize: 15, fontWeight:10, justifyContent: 'center'}}>name: {this.state.name}, date:{this.state.date}, place: {this.state.place}, what: {this.state.what}, memo: {this.state.memo}</Text> */}
+        <Button title="send" color="black" style={{fontSize:10, fontWeight:15}} onPress={()=>{
+
               // datetimepicker로 받은 값 파싱 (2020-01-15T03:48:50 이런식으로나옴)
               let strDate = this.state.date.split('T')[0]
               let strTime = this.state.date.split('T')[1]
@@ -123,8 +119,8 @@ class MeetMeetScreen extends Component {
                   );
               });
 
-              Alert.alert('Send Success')
-          }}></Button>
+             Alert.alert('Send Success',"Name: "+this.state.name+", Date: "+this.state.date+", Place: "+this.state.place+", What: "+this.state.what+", Memo: "+this.state.memo)}}>
+          <Ionicons name={"ios-paper-plane"}/>
         </View>
     </Container>
     )
@@ -140,41 +136,56 @@ const styles = StyleSheet.create({
     fontSize: 20,
     backgroundColor: "#efefef",
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
+    width:'100%'
   },
   header:{
-    width: '100%',
+    width: '90%',
     flex:1,
-    backgroundColor: '#be1323'
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: '#efefef'
   },
   content:{
     width: '100%',
+    alignItems: "center",
+    justifyContent: "center",
     flex:3
   },
   footer:{
     width: '100%',
     flex:1,
-    backgroundColor: '#be1323'
+    backgroundColor: '#efefef'
   },
   input: {
     borderWidth: 1,
     borderRadius: 5,
     borderColor: '#777',
     backgroundColor: '#fff',
-    padding: 8,
-    margin: 10,
-    width: 200,
+    padding: 5,
+    margin: 5,
+    width: '70%',
   },
   title:{
     margin:5,
+    width: '100%',
+    marginTop:'15%',
+    alignContent: 'center',
+    fontSize:30,
+    fontWeight:'bold',
+    justifyContent: 'center'
+  },
+  text:{
+    margin:3,
   },
   row: {
     flex: 1,
-    width: '100%',
+    width: '90%',
     alignItems: "center",
-    backgroundColor: "#efefef",
+    backgroundColor: "#fff",
     margin: 10,
     flexDirection: 'row',
+    borderRadius:50,
     justifyContent: 'center'
   },
   second: {
